@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30204.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPFdotnetcore_UESTCnetworkAutoConnect", "WPFdotnetcore_UESTCnetworkAutoConnect\WPFdotnetcore_UESTCnetworkAutoConnect.csproj", "{AA102E30-6CE2-4FB2-BBB4-CF73910BBD73}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "libCheckAndReconnectUESTC", "libCheckAndReconnectUESTC\libCheckAndReconnectUESTC.csproj", "{B764D87E-A851-4A6B-B8AC-422E13D4575E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "localStorageConfiguration", "localStorageConfiguration\localStorageConfiguration.csproj", "{840298F4-F94B-49E6-96C2-EE2FD864B1CE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "libMantainNetwork", "MantainNetworkBackgroundService\libMantainNetwork.csproj", "{FF350899-90DF-4634-838D-1B494B8AB592}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AA102E30-6CE2-4FB2-BBB4-CF73910BBD73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA102E30-6CE2-4FB2-BBB4-CF73910BBD73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA102E30-6CE2-4FB2-BBB4-CF73910BBD73}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{AA102E30-6CE2-4FB2-BBB4-CF73910BBD73}.Debug|x64.Build.0 = Debug|Any CPU
+		{AA102E30-6CE2-4FB2-BBB4-CF73910BBD73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA102E30-6CE2-4FB2-BBB4-CF73910BBD73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA102E30-6CE2-4FB2-BBB4-CF73910BBD73}.Release|x64.ActiveCfg = Release|Any CPU
+		{AA102E30-6CE2-4FB2-BBB4-CF73910BBD73}.Release|x64.Build.0 = Release|Any CPU
+		{B764D87E-A851-4A6B-B8AC-422E13D4575E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B764D87E-A851-4A6B-B8AC-422E13D4575E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B764D87E-A851-4A6B-B8AC-422E13D4575E}.Debug|x64.ActiveCfg = Debug|x64
+		{B764D87E-A851-4A6B-B8AC-422E13D4575E}.Debug|x64.Build.0 = Debug|x64
+		{B764D87E-A851-4A6B-B8AC-422E13D4575E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B764D87E-A851-4A6B-B8AC-422E13D4575E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B764D87E-A851-4A6B-B8AC-422E13D4575E}.Release|x64.ActiveCfg = Release|x64
+		{B764D87E-A851-4A6B-B8AC-422E13D4575E}.Release|x64.Build.0 = Release|x64
+		{840298F4-F94B-49E6-96C2-EE2FD864B1CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{840298F4-F94B-49E6-96C2-EE2FD864B1CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{840298F4-F94B-49E6-96C2-EE2FD864B1CE}.Debug|x64.ActiveCfg = Debug|x64
+		{840298F4-F94B-49E6-96C2-EE2FD864B1CE}.Debug|x64.Build.0 = Debug|x64
+		{840298F4-F94B-49E6-96C2-EE2FD864B1CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{840298F4-F94B-49E6-96C2-EE2FD864B1CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{840298F4-F94B-49E6-96C2-EE2FD864B1CE}.Release|x64.ActiveCfg = Release|x64
+		{840298F4-F94B-49E6-96C2-EE2FD864B1CE}.Release|x64.Build.0 = Release|x64
+		{FF350899-90DF-4634-838D-1B494B8AB592}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF350899-90DF-4634-838D-1B494B8AB592}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF350899-90DF-4634-838D-1B494B8AB592}.Debug|x64.ActiveCfg = Debug|x64
+		{FF350899-90DF-4634-838D-1B494B8AB592}.Debug|x64.Build.0 = Debug|x64
+		{FF350899-90DF-4634-838D-1B494B8AB592}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF350899-90DF-4634-838D-1B494B8AB592}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF350899-90DF-4634-838D-1B494B8AB592}.Release|x64.ActiveCfg = Release|x64
+		{FF350899-90DF-4634-838D-1B494B8AB592}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1B2EF6F8-1906-4CD9-84ED-6C742EA0A03D}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <OutputType>Library</OutputType>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\libCheckAndReconnectUESTC\libCheckAndReconnectUESTC.csproj" />
+    <ProjectReference Include="..\localStorageConfiguration\localStorageConfiguration.csproj" />
+  </ItemGroup>
+
+</Project>
