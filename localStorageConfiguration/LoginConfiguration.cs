@@ -18,14 +18,21 @@ namespace localStorageConfiguration
     }
     public class LoginConfigurationHandler
     {
-        private const string dataFileName="loginConfiguration.xml";
+        private const string dataFileName= "loginConfiguration.xml";
+        private string applicationLocation = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+
+        private string dataFilePath;
+        public LoginConfigurationHandler()
+        {
+            dataFilePath = System.IO.Path.Combine(applicationLocation, dataFileName);
+        }
         public LoginConfiguration Load()
         {
             LoginConfiguration data;
             try
             {
                 var s = new System.Xml.Serialization.XmlSerializer(typeof(LoginConfiguration));
-                using(System.IO.StreamReader dataFile=System.IO.File.OpenText(dataFileName))
+                using(System.IO.StreamReader dataFile=System.IO.File.OpenText(dataFilePath))
                 {
                     data = (LoginConfiguration)s.Deserialize(dataFile);
                     dataFile.Close();
@@ -41,7 +48,7 @@ namespace localStorageConfiguration
         public void Save(LoginConfiguration loginConfig)
         {
             var s = new System.Xml.Serialization.XmlSerializer(typeof(LoginConfiguration));
-            var dataFile = System.IO.File.CreateText(dataFileName);
+            var dataFile = System.IO.File.CreateText(dataFilePath);
             s.Serialize(dataFile, loginConfig);
             dataFile.Close();
         }

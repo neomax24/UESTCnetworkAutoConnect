@@ -1,32 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using libCheckAndReconnectUESTC;
+using localStorageConfiguration;
+using System;
+using System.Diagnostics;
+using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Diagnostics;
-using localStorageConfiguration;
-using libCheckAndReconnectUESTC;
-using System.IO;
 
 namespace libMantainNetwork
 {
     public class MantainNet
     {
-        private static TimeSpan[] networkCheckTime_round = new TimeSpan[3] {
+        private TimeSpan[] networkCheckTime_round = new TimeSpan[3] {
                                                                 TimeSpan.FromSeconds(1),
                                                                 TimeSpan.FromSeconds(30),
                                                                 TimeSpan.FromMinutes(10)
                                                                 };
-        private static int checkTimePerRound = 10;
-        private static int networkCheckRound = 0;
-        private static TimeSpan connectedReportPeriod = TimeSpan.FromSeconds(10);
-        private static TimeSpan accumateConnectedTime;
-        private static DateTime startTime;
-        public const string logFileName= "mantainNet.log";
+        private int checkTimePerRound = 10;
+        private int networkCheckRound = 0;
+        private TimeSpan connectedReportPeriod = TimeSpan.FromSeconds(10);
+        private TimeSpan accumateConnectedTime;
+        private DateTime startTime;
+        private string applicationLocation = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+        public string logFileName = "mantainNet.log";
+        public string logFilePath;
+
         public MantainNet()
         {
+            logFilePath = System.IO.Path.Combine(applicationLocation, logFileName);
+            resetLoggingFile();
         }
-        public static async Task MonitorAndReconnect(LoginConfiguration _loginConfig,CancellationToken stoppingToken)
+        public async Task MonitorAndReconnect(LoginConfiguration _loginConfig,CancellationToken stoppingToken)
         {
             stoppingToken.Register(() =>
             {
@@ -89,28 +93,28 @@ namespace libMantainNetwork
                 isNetworkConnect = await uestcNetworkHandler.CheckNetwork();
             }
         }
-        private static void sentLogToLogFile(string _logMessage)
+        private void sentLogToLogFile(string _logMessage)
         {
-            FileInfo fi = new FileInfo(logFileName);
+            FileInfo fi = new FileInfo(logFilePath);
             if (fi.Length>1000000)
             {
                 startLogging(startTime);
             }
-            using (FileStream fs = File.Open(logFileName, FileMode.Append, FileAccess.Write, FileShare.Read))
+            using (FileStream fs = File.Open(logFilePath, FileMode.Append, FileAccess.Write, FileShare.Read))
             {
                 
                 var buffer = _logMessage;
                 fs.Write(Encoding.ASCII.GetBytes(buffer), 0, buffer.Length);
             }
         }
-        private static string genLogLineWithTimeStamp(string _logLine)
+        private string genLogLineWithTimeStamp(string _logLine)
         {
             return string.Concat(
                 DateTime.Now.ToString("yyyy/MM/dd-HH:mm:ss"),
                 " : ",
                 _logLine, System.Environment.NewLine);
         }
-        private static string genLogLineWithTimeStamp(DateTime _time,string _logLine)
+        private string genLogLineWithTimeStamp(DateTime _time,string _logLine)
         {
             return string.Concat(
                 _time.ToString("yyyy/MM/dd-HH:mm:ss"),
@@ -118,13 +122,17 @@ namespace libMantainNetwork
                 _logLine, System.Environment.NewLine);
         }
 
-        private static void startLogging(DateTime _time)
+        private  void startLogging(DateTime _time)
         {
-            using (FileStream fs = File.Open(logFileName, FileMode.Create, FileAccess.Write, FileShare.Read))
+            using (FileStream fs = File.Open(logFilePath, FileMode.Create, FileAccess.Write, FileShare.Read))
             {
                 var buffer = (genLogLineWithTimeStamp(_time,"start"));
                 fs.Write(Encoding.ASCII.GetBytes(buffer), 0, buffer.Length);
             }
+        }
+        private void resetLoggingFile()
+        {
+            File.Create(logFilePath).Dispose();
         }
     }
 }

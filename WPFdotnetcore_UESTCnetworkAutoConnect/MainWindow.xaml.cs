@@ -34,6 +34,8 @@ namespace WPFdotnetcore_UESTCnetworkAutoConnect
         private FileSystemWatcher logFileWatcher;
         private static long perviousLogFileSize;
         public LogBlockTextValue logBlockTextValue;
+        public MantainNet mantainNet;
+        private string applicationLocation = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
         public System.Windows.Forms.NotifyIcon notifyIcon = null;
 
@@ -53,7 +55,7 @@ namespace WPFdotnetcore_UESTCnetworkAutoConnect
         {
             notifyIcon = new System.Windows.Forms.NotifyIcon();
             notifyIcon.Visible = false;
-            notifyIcon.Icon = new System.Drawing.Icon("icon-256.ico");
+            notifyIcon.Icon = new System.Drawing.Icon(System.IO.Path.Combine(applicationLocation,"icon-256.ico"));
             notifyIcon.DoubleClick += NotifyIcon_DoubleClick;
         }
 
@@ -70,9 +72,10 @@ namespace WPFdotnetcore_UESTCnetworkAutoConnect
 
         private void InitializeLogConfiguration()
         {
+            mantainNet = new MantainNet();
             logFileWatcher = new FileSystemWatcher();
-            logFileWatcher.Path = System.IO.Directory.GetCurrentDirectory();
-            logFileWatcher.Filter = MantainNet.logFileName;
+            logFileWatcher.Path = applicationLocation;
+            logFileWatcher.Filter = mantainNet.logFileName;
             logFileWatcher.NotifyFilter = NotifyFilters.LastWrite;
             logFileWatcher.Changed += new FileSystemEventHandler(OnLogFileChanged);
             
@@ -84,7 +87,7 @@ namespace WPFdotnetcore_UESTCnetworkAutoConnect
         {
             if (System.IO.File.Exists(e.FullPath))
             {                
-                using (FileStream fs = File.Open(MantainNet.logFileName,FileMode.Open,FileAccess.Read,FileShare.Write))
+                using (FileStream fs = File.Open(mantainNet.logFilePath,FileMode.Open,FileAccess.Read,FileShare.Write))
                 {
                     fs.Seek(perviousLogFileSize, SeekOrigin.Begin);
                     StringBuilder buffer = new StringBuilder();
@@ -125,7 +128,7 @@ namespace WPFdotnetcore_UESTCnetworkAutoConnect
             logFileWatcher.EnableRaisingEvents = true;
             Task.Run(() =>
             {
-                MantainNet.MonitorAndReconnect(loginConfig, mantainTaskCancelToken.Token);
+                mantainNet.MonitorAndReconnect(loginConfig, mantainTaskCancelToken.Token);
             });
         }
 
@@ -136,9 +139,10 @@ namespace WPFdotnetcore_UESTCnetworkAutoConnect
             loginConfigurationHandler.Save(loginConfig);
             if(checkBox_startUp.IsChecked==true)
             {
-                string applicationLocation = System.Reflection.Assembly.GetEntryAssembly().Location;
+                string applicationName = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
+                string applicationPath = System.IO.Path.Combine(applicationLocation, applicationName + ".exe");
                 Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-                key.SetValue("UESTCnetworkAutoConnect", applicationLocation);
+                key.SetValue("UESTCnetworkAutoConnect", applicationPath);
             }
             else
             {
@@ -153,7 +157,7 @@ namespace WPFdotnetcore_UESTCnetworkAutoConnect
             {
                 mantainTaskCancelToken.Cancel();
             }
-            //logFileWatcher.EnableRaisingEvents = false;
+            logFileWatcher.EnableRaisingEvents = false;
         }
         protected override void OnStateChanged(EventArgs e)
         {
@@ -181,6 +185,10 @@ namespace WPFdotnetcore_UESTCnetworkAutoConnect
                     _logData = value;
                     OnPropertyChanged();
                 }
+            }
+            public LogBlockTextValue()
+            {
+                logData = "";
             }
             public event PropertyChangedEventHandler PropertyChanged;
             protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
